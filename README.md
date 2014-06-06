@@ -43,9 +43,9 @@ git clone https://github.com/cesaraugustogarcia/cloudhub-client-py
 cd cloudhub-client-py
 mkdir ~/.cloudhubclient
 cp -rf . ~/.cloudhubclient/
-echo "alias cloudhub='python ~/.cloudhubclient/cloudhubClient.py'" >> ~/.bash_profile
+echo -e "\nalias cloudhub='python ~/.cloudhubclient/cloudhubClient.py'" >> ~/.bash_profile
 chmod +x ~/.cloudhubclient/cloudhubClient.py
-source ~/.profile
+source ~/.bash_profile
 ```
 
 This steps copy the project on your User directory (~). In some cases the last step could depend on your terminal, for example ```source ~/.bash_profile``` could be required instead.
