@@ -16,6 +16,8 @@ from modules import DeleteTenant
 from modules import UpdateTenant
 from modules import UpdateTenantStatus
 from modules import GetLogs
+from modules import SaveAllAlerts
+from modules import LoadAlert
 
 parser = argparse.ArgumentParser(epilog="More info on each subcommand try: 'python cloudhubClient.py {subcommand} -h'")
 subparsers = parser.add_subparsers(title='subcommands')
@@ -95,6 +97,17 @@ getLogs_parser.add_argument('-o','--output-format',dest='output_format',required
 getLogs_parser.add_argument('-c','--columns',dest='cols',metavar='COL1,COL2',required=False,default="timestamp,message",help="Columns to include in output file. Values are: message, priority, sequenceNumber, timestamp")
 getLogs_parser.add_argument('-ms','--max-size',dest='max_size',required=False,default="512",help="Crop messages size. Default is 512 chars.")
 getLogs_parser.set_defaults(func=GetLogs.make_request)
+
+saveAlerts_parser = subparsers.add_parser('sal', help='Save all alerts from a CloudHub environment to current folder.')
+saveAlerts_parser.add_argument('-cu','--cloudhub-user',metavar='USERNAME',dest='cloudhub_user',required=True)
+saveAlerts_parser.add_argument('-cp','--cloudhub-pass',metavar='PASSWORD',dest='cloudhub_pass',required=True)
+saveAlerts_parser.set_defaults(func=SaveAllAlerts.make_request)
+
+loadAlert_parser = subparsers.add_parser('lal', help='Load alert to Cloudhub from previously saved alert to JSON file (see Save All Alerts -sal- command).')
+loadAlert_parser.add_argument('-cu','--cloudhub-user',metavar='USERNAME',dest='cloudhub_user',required=True)
+loadAlert_parser.add_argument('-cp','--cloudhub-pass',metavar='PASSWORD',dest='cloudhub_pass',required=True)
+loadAlert_parser.add_argument('-f','--file-path',dest='file_path',required=True)
+loadAlert_parser.set_defaults(func=LoadAlert.make_request)
 
 args = parser.parse_args()
 args.func(vars(args))
